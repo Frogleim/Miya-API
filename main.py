@@ -7,6 +7,8 @@ import db_connect
 import json
 from fastapi.middleware.cors import CORSMiddleware
 
+
+
 app = FastAPI()
 origins = [
     "http://77.37.51.134:8000",  # Your frontend server origin
@@ -19,6 +21,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 
 class Database(BaseModel):
@@ -108,6 +111,10 @@ async def get_action_log():
     else:
         raise HTTPException(status_code=404, detail="Log file not found")
 
+
+@app.get("/create_all_tables/")
+def create_tables():
+    pass
 
 @app.post('/set_credentials/')
 def set_credentials(keys: BinanceKeys):
