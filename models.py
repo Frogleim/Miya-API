@@ -73,7 +73,7 @@ except (ProgrammingError, OperationalError) as e:
 connection.close()
 
 # Now connect to the newly created 'miya_test' database
-DATABASE_URL_NEW = "postgresql://postgres:admin@localhost:5432/miya_test"
+DATABASE_URL_NEW = "postgresql://postgres:admin@pgdb:5432/miya"
 engine_new = create_engine(DATABASE_URL_NEW)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine_new)
 

@@ -16,7 +16,7 @@ def create_database():
     connection.close()
 
 
-DATABASE_URL_NEW = "postgresql://postgres:admin@localhost:5433/miya_test"
+DATABASE_URL_NEW = "postgresql://postgres:admin@pgdb:5432/miya"
 
 engine_new = create_engine(DATABASE_URL_NEW)
 
