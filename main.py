@@ -248,9 +248,10 @@ def clean_table(table: Database):
         return {'Message': f'Successfully cleaned {table.table_name}'}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f'Failed to clean {table.table_name}')
-#
-#
-# if __name__ == "__main__":
-#     import uvicorn
-#
-#     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
+@app.post('/get_signal/')
+def get_signal():
+    my_db = db_connect.DataBase()
+    data = my_db.get_signal(symbol='BNBUSDT')
+    return data
