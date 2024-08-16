@@ -80,8 +80,16 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine_new)
 
 # Create all tables
 def create_tables():
-    Base.metadata.create_all(bind=engine_new)
-    print("All tables created successfully.")
+    try:
+        # Check the connection first
+        with engine_new.connect() as conn:
+            print("Successfully connected to the database.")
+
+        # Create the tables
+        Base.metadata.create_all(bind=engine_new)
+        print("All tables created successfully.")
+    except Exception as e:
+        print(f"An error occurred while creating tables: {str(e)}")
 
 
 if __name__ == "__main__":
