@@ -8,6 +8,7 @@ from pydantic_sqlalchemy import sqlalchemy_to_pydantic
 # Define the Base for declarative models
 Base = declarative_base()
 
+
 # Define your models
 class User(Base):
     __tablename__ = 'users'
@@ -15,11 +16,13 @@ class User(Base):
     name = Column(String, index=True)
     email = Column(String, unique=True, index=True)
 
+
 class BinanceKeys(Base):
     __tablename__ = 'binance_keys'
     id = Column(Integer, primary_key=True, index=True)
     api_key = Column(String, index=True)
     api_secret = Column(String, index=True)
+
 
 class Signals(Base):
     __tablename__ = 'signals'
@@ -30,8 +33,10 @@ class Signals(Base):
     indicator = Column(String, index=True)
     timestamp = Column(TIMESTAMP, server_default=func.now(), index=True)
 
+
 class TradeCoins(Base):
     __tablename__ = 'trade_coins'
+
     id = Column(Integer, primary_key=True, index=True)
     symbol = Column(String, index=True)
     quantity = Column(Integer, index=True)
@@ -39,6 +44,14 @@ class TradeCoins(Base):
     stop_loss = Column(FLOAT, index=True)
     indicator = Column(String, index=True)
     is_finished = Column(BOOLEAN, index=True)
+
+
+class IsFinished(Base):
+    __tablename__ = 'is_finished'
+
+    id = Column(Integer, primary_key=True, index=True)
+    is_finished = Column(BOOLEAN, index=True)
+
 
 # Create Pydantic model from SQLAlchemy model
 User_Pydantic = sqlalchemy_to_pydantic(User)
@@ -60,14 +73,16 @@ except (ProgrammingError, OperationalError) as e:
 connection.close()
 
 # Now connect to the newly created 'miya_test' database
-DATABASE_URL_NEW = "postgresql://postgres:admin@localhost:5433/miya_test"
+DATABASE_URL_NEW = "postgresql://postgres:admin@localhost:5432/miya_test"
 engine_new = create_engine(DATABASE_URL_NEW)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine_new)
+
 
 # Create all tables
 def create_tables():
     Base.metadata.create_all(bind=engine_new)
     print("All tables created successfully.")
+
 
 if __name__ == "__main__":
     create_tables()
